@@ -16,7 +16,7 @@ class Database:
         cursor.execute("""
                        CREATE TABLE IF NOT EXISTS postes
                        (
-                           id        INTEGER PRIMARY KEY AUTOINCREMENT, -- Clé primaire unique pour chaque poste | AUTOINCREMENT garantit un identifiant unique généré automatiquement
+                           id_poste        INTEGER PRIMARY KEY AUTOINCREMENT, -- Clé primaire unique pour chaque poste | AUTOINCREMENT garantit un identifiant unique généré automatiquement
                            nom_poste       TEXT NOT NULL,    -- Nom du poste (obligatoire)
                            utilisateur    TEXT NOT NULL,    -- Nom de l'utilisateur (obligatoire)
                            type_poste   TEXT NOT NULL,    -- Type de poste (obligatoire)
