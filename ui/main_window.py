@@ -2,6 +2,9 @@ from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayo
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6.QtCore import Qt
 
+from db.database import Database
+from ui.AddPosteWindow import AddPosteWindow
+
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -37,7 +40,7 @@ class MainWindow(QWidget):
 
         # Créer le modèle de données qui contiendra les postes, i.e. lien entre SQLite et QTableView
         self.model = QStandardItemModel()
-        self.model.setHorizontalHeaderLabels(["Nom", "Prénom", "Téléphone", "Courriel"])
+        self.model.setHorizontalHeaderLabels(["Nom Poste","Utilisateur","Type Poste","System d'exploitation", "Adresse IP", "Statut"])
 
         # Associer le modèle à la table (le QTableView affichera automatiquement le contenu du modèle)
         self.table.setModel(self.model)
@@ -168,13 +171,16 @@ class MainWindow(QWidget):
         postes = db.get_all_postes()
 
         for poste in postes:
-            id_poste, nom, prenom, telephone, email = poste
+            id_poste, nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut = poste
 
             row = [
-                QStandardItem(nom),
-                QStandardItem(prenom),
-                QStandardItem(telephone),
-                QStandardItem(email)
+                QStandardItem(id_poste),
+                QStandardItem(nom_poste),
+                QStandardItem(utilisateur),
+                QStandardItem(type_poste),
+                QStandardItem(sys_exploitation),
+                QStandardItem(adresse_ip),
+                QStandardItem(statut)
             ]
 
             # Stocker l'ID SQLite dans la première colonne
