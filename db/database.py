@@ -87,3 +87,19 @@ class Database:
         conn.commit()
         conn.close()
 
+
+
+# Test
+db = Database()
+
+poste_test = Poste(
+    nom_poste="PC-TEST",
+    utilisateur="Test User",
+    type_poste="Portable",
+    sys_exploitation="Windows 11",
+    adresse_ip="192.168.1.100",
+    statut="Actif"
+)
+
+db.add_poste(poste_test)
+print("Insertion OK")
