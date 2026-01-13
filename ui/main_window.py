@@ -40,7 +40,7 @@ class MainWindow(QWidget):
 
         # Créer le modèle de données qui contiendra les postes, i.e. lien entre SQLite et QTableView
         self.model = QStandardItemModel()
-        self.model.setHorizontalHeaderLabels(["Nom Poste","Utilisateur","Type Poste","System d'exploitation", "Adresse IP", "Statut"])
+        self.model.setHorizontalHeaderLabels(["Nom Poste","Utilisateur","Type Poste", "Adresse IP", "Statut", "Système d'exploitation"])
 
         # Associer le modèle à la table (le QTableView affichera automatiquement le contenu du modèle)
         self.table.setModel(self.model)
@@ -115,10 +115,10 @@ class MainWindow(QWidget):
         # Extrait l'identifiant unique du poste depuis le modèle
         # Cet identifiant provient de la base SQLite et est stocké
         # dans la colonne "Nom" à l'aide du rôle UserRole
-        poste_id = self.model.item(row, 0).data(Qt.ItemDataRole.UserRole)
+        id = self.model.item(row, 0).data(Qt.ItemDataRole.UserRole)
 
         poste_data = (
-            poste_id,
+            id,
             self.model.item(row, 0).text(),
             self.model.item(row, 1).text(),
             self.model.item(row, 2).text(),
@@ -154,13 +154,13 @@ class MainWindow(QWidget):
         if reply == QMessageBox.StandardButton.Yes:
             # Extraction de l'identifiant unique du poste depuis le modèle
             # Cet identifiant permet d'effectuer la suppression dans SQLite
-            poste_id = self.model.item(index.row(), 0).data(Qt.ItemDataRole.UserRole)
+            id = self.model.item(index.row(), 0).data(Qt.ItemDataRole.UserRole)
 
             # Instanciation de la classe de gestion de la base de données
             db = Database()
 
             # Exécution de l'opération DELETE sur la table postes
-            db.delete_poste(poste_id)
+            db.delete_poste(id)
 
             self.load_postes_from_db()
 
@@ -173,19 +173,19 @@ class MainWindow(QWidget):
         postes = db.get_all_postes()
 
         for poste in postes:
-            poste_id, nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut = poste
+            id, nom_poste, utilisateur, type_poste, adresse_ip, statut, sys_exploitation = poste
 
             row = [
                 QStandardItem(nom_poste),
                 QStandardItem(utilisateur),
                 QStandardItem(type_poste),
-                QStandardItem(sys_exploitation),
                 QStandardItem(adresse_ip),
-                QStandardItem(statut)
+                QStandardItem(statut),
+                QStandardItem(sys_exploitation)
             ]
 
             # Stocker l'ID SQLite dans la première colonne
-            row[0].setData(poste_id, Qt.ItemDataRole.UserRole)
+            row[0].setData(id, Qt.ItemDataRole.UserRole)
 
             self.model.appendRow(row)
 
