@@ -3,7 +3,6 @@ from PyQt6.QtCore import Qt
 
 from db.database import Database
 from poste import Poste
-from catch.input_errors import Catch
 
 class AddPosteWindow(QWidget):
     def __init__(self, poste_data=None, on_save_callback=None):
@@ -42,38 +41,38 @@ class AddPosteWindow(QWidget):
         self.input_nom_poste = QLineEdit()
         self.input_utilisateur = QLineEdit()
         self.input_type_poste = QLineEdit()
-        self.input_sys_exploitation = QLineEdit()
         self.input_adresse_ip = QLineEdit()
         self.input_statut = QLineEdit()
+        self.input_sys_exploitation = QLineEdit()
 
         self.input_nom_poste.setPlaceholderText("Nom du poste")
         self.input_utilisateur.setPlaceholderText("Utilisateur")
         self.input_type_poste.setPlaceholderText("Type de poste")
-        self.input_sys_exploitation.setPlaceholderText("Système d'exploitation")
         self.input_adresse_ip.setPlaceholderText("Adresse IP")
         self.input_statut.setPlaceholderText("Statut")
+        self.input_sys_exploitation.setPlaceholderText("Système d'exploitation")
 
-        form_layout.addRow("Nom du poste :", self.nom_poste)
-        form_layout.addRow("Utilisateur :", self.utilisateur)
-        form_layout.addRow("Type de poste :", self.type_poste)
-        form_layout.addRow("Système d'exploitation :", self.sys_exploitation)
-        form_layout.addRow("Adresse IP :", self.adresse_ip)
-        form_layout.addRow("Statut :", self.statut)
+        form_layout.addRow("Nom du poste :", self.input_nom_poste)
+        form_layout.addRow("Utilisateur :", self.input_utilisateur)
+        form_layout.addRow("Type de poste :", self.input_type_poste)
+        form_layout.addRow("Système d'exploitation :", self.input_sys_exploitation)
+        form_layout.addRow("Adresse IP :", self.input_adresse_ip)
+        form_layout.addRow("Statut :", self.input_statut)
 
         # Si des données de poste sont fournies, la fenêtre est en mode édition
         if poste_data:
             # Extraction de l'identifiant unique et des informations du poste
             # Ces données proviennent de la sélection dans la QTableView
-            self.poste_id, nom, prenom, telephone, email = poste_data
+            self.poste_id, nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut = poste_data
 
             # Initialisation des champs du formulaire avec les données existantes
             # afin de permettre à l'utilisateur de modifier le poste
-            self.input_nom_poste.setText(nom)
-            self.input_utilisateur.setText(prenom)
-            self.input_type_poste.setText(telephone)
-            self.input_sys_exploitation.setText(email)
-            self.input_adresse_ip.setText(email)
-            self.input_statut.setText(email)
+            self.input_nom_poste.setText(nom_poste)
+            self.input_utilisateur.setText(utilisateur)
+            self.input_type_poste.setText(type_poste)
+            self.input_sys_exploitation.setText(sys_exploitation)
+            self.input_adresse_ip.setText(adresse_ip)
+            self.input_statut.setText(statut)
 
         #Boutons
         button_layout = QHBoxLayout()
@@ -104,18 +103,18 @@ class AddPosteWindow(QWidget):
         # Récupération des valeurs
         nom = self.input_nom_poste.text()
         utilisateur = self.input_utilisateur.text()
-        type = self.input_type_poste.text()
-        systeme = self.input_sys_exploitation.text()
+        type_poste = self.input_type_poste.text()
         ip = self.input_adresse_ip.text()
         statut = self.input_statut.text()
+        systeme = self.input_sys_exploitation.text()
 
         field_map = {
             "nom du poste": [self.input_nom_poste],
             "utilisateur": [self.input_utilisateur],
             "type de poste": [self.input_type_poste],
-            "système d'exploitation": [self.input_sys_exploitation],
             "adresse ip": [self.input_adresse_ip],
-            "statut": [self.input_statut]
+            "statut": [self.input_statut],
+            "système d'exploitation": [self.input_sys_exploitation]
         }
 
         # Réinitialise le style de tous les champs du formulaire
@@ -125,21 +124,21 @@ class AddPosteWindow(QWidget):
             for widget in widgets:
                 widget.setStyleSheet("")
 
-        # Validation des input par catch
-        is_valid, field, message = Catch.validate_poste(
-            nom, utilisateur, type, systeme, ip, statut
-        )
-
-        if not is_valid:
-            for widget in field_map[field]:
-                widget.setStyleSheet("border: 2px solid red;")
-                widget.setFocus()  # Place le curseur sur le champ invalide
-
-            QMessageBox.warning(self, "Erreur de validation", message)
-            return
+        # # Validation des input par catch
+        # is_valid, field, message = Catch.validate_poste(
+        #     nom, utilisateur, type, systeme, ip, statut
+        # )
+        #
+        # if not is_valid:
+        #     for widget in field_map[field]:
+        #         widget.setStyleSheet("border: 2px solid red;")
+        #         widget.setFocus()  # Place le curseur sur le champ invalide
+        #
+        #     QMessageBox.warning(self, "Erreur de validation", message)
+        #     return
 
         # Création de l'objet Poste
-        poste = Poste(nom_poste=nom, utilisateur=utilisateur, type_poste=type, sys_exploitation=systeme, adresse_ip=ip, statut=statut)
+        poste = Poste(nom_poste=nom, utilisateur=utilisateur, type_poste=type_poste, adresse_ip=ip, statut=statut, sys_exploitation=systeme)
         db = Database()
 
         # Si des données de poste existent, cela signifie que l'utilisateur modifie un poste déjà présent dans la base de données
