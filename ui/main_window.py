@@ -1,5 +1,4 @@
 import webbrowser
-
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QTableView, QMessageBox
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6.QtCore import Qt
@@ -195,6 +194,6 @@ class MainWindow(QWidget):
             self.model.appendRow(row)
 
     def open_website(self):
-        webbrowser.open_new("http://localhost:63342/TeamCH-TP2b/Siteweb/index.html?_ijt=jfglnqkrgrsuvb2oicomk1gcki&_ij_reload=RELOAD_ON_SAVE")
+        webbrowser.open_new("http://localhost:63342/TeamCH-TP2b/Siteweb/index.html?")
 
 
