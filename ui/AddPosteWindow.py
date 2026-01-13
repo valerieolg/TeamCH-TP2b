@@ -1,7 +1,6 @@
 from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QFormLayout,
                              QMessageBox, QComboBox)
 from PyQt6.QtCore import Qt
-
 from db.database import Database
 from poste import Poste
 from catch.input_errors import Catch
@@ -75,6 +74,9 @@ class AddPosteWindow(QWidget):
             self.input_adresse_ip.setText(adresse_ip)
             self.input_statut.findText(statut)
             index = self.input_statut.findText(statut)
+            self.input_sys_exploitation.setText(sys_exploitation)
+
+
             if index >= 0:
                 self.input_statut.setCurrentIndex(index)
             self.input_sys_exploitation.setText(sys_exploitation)
