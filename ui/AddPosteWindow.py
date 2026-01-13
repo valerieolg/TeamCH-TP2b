@@ -134,12 +134,14 @@ class AddPosteWindow(QWidget):
          )
 
         if not is_valid:
-             for widget in field_map[field]:
-                 widget.setStyleSheet("border: 2px solid red;")
-                 widget.setFocus()  # Place le curseur sur le champ invalide
+            widgets = field_map.get(field)
+            if widgets:
+                for widget in widgets:
+                    widget.setStyleSheet("border: 2px solid red;")
+                    widget.setFocus()
 
-             QMessageBox.warning(self, "Erreur de validation", message)
-             return
+            QMessageBox.warning(self, "Erreur de validation", message)
+            return
 
         # Création de l'objet Poste
         poste = Poste(nom_poste=nom, utilisateur=utilisateur, type_poste=type_poste, adresse_ip=ip, statut=statut, sys_exploitation=systeme)
