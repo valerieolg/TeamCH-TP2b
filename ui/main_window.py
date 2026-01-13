@@ -115,10 +115,10 @@ class MainWindow(QWidget):
         # Extrait l'identifiant unique du poste depuis le modèle
         # Cet identifiant provient de la base SQLite et est stocké
         # dans la colonne "Nom" à l'aide du rôle UserRole
-        id_poste = self.model.item(row, 0).data(Qt.ItemDataRole.UserRole)
+        poste_id = self.model.item(row, 0).data(Qt.ItemDataRole.UserRole)
 
         poste_data = (
-            id_poste,
+            poste_id,
             self.model.item(row, 0).text(),
             self.model.item(row, 1).text(),
             self.model.item(row, 2).text(),
@@ -152,13 +152,13 @@ class MainWindow(QWidget):
         if reply == QMessageBox.StandardButton.Yes:
             # Extraction de l'identifiant unique du poste depuis le modèle
             # Cet identifiant permet d'effectuer la suppression dans SQLite
-            id_poste = self.model.item(index.row(), 0).data(Qt.ItemDataRole.UserRole)
+            poste_id = self.model.item(index.row(), 0).data(Qt.ItemDataRole.UserRole)
 
             # Instanciation de la classe de gestion de la base de données
             db = Database()
 
             # Exécution de l'opération DELETE sur la table postes
-            db.delete_poste(id_poste)
+            db.delete_poste(poste_id)
 
             self.load_postes_from_db()
 
@@ -171,10 +171,9 @@ class MainWindow(QWidget):
         postes = db.get_all_postes()
 
         for poste in postes:
-            id_poste, nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut = poste
+            poste_id, nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut = poste
 
             row = [
-                QStandardItem(id_poste),
                 QStandardItem(nom_poste),
                 QStandardItem(utilisateur),
                 QStandardItem(type_poste),
@@ -184,7 +183,7 @@ class MainWindow(QWidget):
             ]
 
             # Stocker l'ID SQLite dans la première colonne
-            row[0].setData(id_poste, Qt.ItemDataRole.UserRole)
+            row[0].setData(poste_id, Qt.ItemDataRole.UserRole)
 
             self.model.appendRow(row)
 

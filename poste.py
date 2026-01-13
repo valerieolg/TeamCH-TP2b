@@ -1,6 +1,5 @@
 class Poste:
-    def __init__(self, id, nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut):
-        self.id = id
+    def __init__(self, nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut):
         self.nom_poste = nom_poste
         self.utilisateur = utilisateur
         self.type_poste = type_poste
