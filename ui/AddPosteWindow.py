@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayou
 from PyQt6.QtCore import Qt
 from db.database import Database
 from poste import Poste
+from catch.input_errors import Catch
 
 class AddPosteWindow(QWidget):
     def __init__(self, poste_data=None, on_save_callback=None):
@@ -71,12 +72,14 @@ class AddPosteWindow(QWidget):
             self.input_utilisateur.setText(utilisateur)
             self.input_type_poste.setText(type_poste)
             self.input_adresse_ip.setText(adresse_ip)
+            self.input_statut.findText(statut)
             index = self.input_statut.findText(statut)
             self.input_sys_exploitation.setText(sys_exploitation)
 
 
             if index >= 0:
                 self.input_statut.setCurrentIndex(index)
+            self.input_sys_exploitation.setText(sys_exploitation)
 
         #Boutons
         button_layout = QHBoxLayout()
@@ -128,18 +131,20 @@ class AddPosteWindow(QWidget):
             for widget in widgets:
                 widget.setStyleSheet("")
 
-        # # Validation des input par catch
-        # is_valid, field, message = Catch.validate_poste(
-        #     nom, utilisateur, type, systeme, ip, statut
-        # )
-        #
-        # if not is_valid:
-        #     for widget in field_map[field]:
-        #         widget.setStyleSheet("border: 2px solid red;")
-        #         widget.setFocus()  # Place le curseur sur le champ invalide
-        #
-        #     QMessageBox.warning(self, "Erreur de validation", message)
-        #     return
+        #  Validation des input par catch
+        is_valid, field, message = Catch.validate_poste(
+             nom, utilisateur, type_poste, ip, statut, systeme
+         )
+
+        if not is_valid:
+            widgets = field_map.get(field)
+            if widgets:
+                for widget in widgets:
+                    widget.setStyleSheet("border: 2px solid red;")
+                    widget.setFocus()
+
+            QMessageBox.warning(self, "Erreur de validation", message)
+            return
 
         # Création de l'objet Poste
         poste = Poste(nom_poste=nom, utilisateur=utilisateur, type_poste=type_poste, adresse_ip=ip, statut=statut, sys_exploitation=systeme)
