@@ -27,11 +27,11 @@ class Catch:
     @staticmethod
     def input_type_poste(value: str):
         if not value.strip(): # Vérifie d’abord si le champ est vide
-            return False, "type du poste", "Le type de poste est obligatoire."
+            return False, "type de poste", "Le type de poste est obligatoire."
 
         regex = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 \-]+$" # Accepte les lettres, accents, espaces, tirets, apostrophes, chiffres
         if not re.fullmatch(regex, value):
-            return False, "type du poste", "Le type de poste contient des caractères invalides."
+            return False, "type de poste", "Le type de poste contient des caractères invalides."
 
         return True, None, ""
 

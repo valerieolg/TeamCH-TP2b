@@ -57,26 +57,27 @@ class AddPosteWindow(QWidget):
         form_layout.addRow("Nom du poste :", self.input_nom_poste)
         form_layout.addRow("Utilisateur :", self.input_utilisateur)
         form_layout.addRow("Type de poste :", self.input_type_poste)
-        form_layout.addRow("Système d'exploitation :", self.input_sys_exploitation)
         form_layout.addRow("Adresse IP :", self.input_adresse_ip)
         form_layout.addRow("Statut :", self.input_statut)
+        form_layout.addRow("Système d'exploitation :", self.input_sys_exploitation)
 
         # Si des données de poste sont fournies, la fenêtre est en mode édition
         if poste_data:
             # Extraction de l'identifiant unique et des informations du poste
             # Ces données proviennent de la sélection dans la QTableView
-            self.poste_id, nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut = poste_data
+            self.poste_id, nom_poste, utilisateur, type_poste, adresse_ip, statut, sys_exploitation = poste_data
 
             # Initialisation des champs du formulaire avec les données existantes
             # afin de permettre à l'utilisateur de modifier le poste
             self.input_nom_poste.setText(nom_poste)
             self.input_utilisateur.setText(utilisateur)
             self.input_type_poste.setText(type_poste)
-            self.input_sys_exploitation.setText(sys_exploitation)
             self.input_adresse_ip.setText(adresse_ip)
+            self.input_statut.findText(statut)
             index = self.input_statut.findText(statut)
             if index >= 0:
                 self.input_statut.setCurrentIndex(index)
+            self.input_sys_exploitation.setText(sys_exploitation)
 
         #Boutons
         button_layout = QHBoxLayout()
