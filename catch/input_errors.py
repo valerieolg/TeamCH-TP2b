@@ -6,13 +6,11 @@ class Catch:
 
     @staticmethod
     def input_nom_poste(value: str):
-        if not value.strip(): # Vérifie d’abord si le champ est vide
-            return False, "nom poste", "Ce champ ne peut pas être vide."
-
-        regex = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9_\- ]+$" # Accepte les lettres, accents, espaces, tirets, apostrophes, chiffres
+        if not value.strip():
+            return False, "nom du poste", "Ce champ ne peut pas être vide."
+        regex = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9_\- ]+$"
         if not re.fullmatch(regex, value):
-            return False, "nom poste", "Le nom contient des caractères invalides."
-
+            return False, "nom du poste", "Le nom contient des caractères invalides."
         return True, None, ""
 
     @staticmethod
@@ -29,11 +27,11 @@ class Catch:
     @staticmethod
     def input_type_poste(value: str):
         if not value.strip(): # Vérifie d’abord si le champ est vide
-            return False, "type de poste", "Le type de poste est obligatoire."
+            return False, "type du poste", "Le type de poste est obligatoire."
 
         regex = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 \-]+$" # Accepte les lettres, accents, espaces, tirets, apostrophes, chiffres
         if not re.fullmatch(regex, value):
-            return False, "type de poste", "Le type de poste contient des caractères invalides."
+            return False, "type du poste", "Le type de poste contient des caractères invalides."
 
         return True, None, ""
 
@@ -47,20 +45,18 @@ class Catch:
 
     @staticmethod
     def input_statut(value: str):
-        STATUTS_AUTORISES = {"Actif", "Inactif", "En réparation", "Hors service"}
-
+        STATUTS_AUTORISES = {"Actif", "En réparation", "Hors service"}
         if value not in STATUTS_AUTORISES:
-            return True, None, ""
+            return False, "statut", "Statut invalide."
+        return True, None, ""
 
     @staticmethod
     def input_sys_exploitation(value: str):
-        if not value.strip(): # Vérifie d’abord si le champ est vide
+        if not value.strip():
             return False, "système d'exploitation", "Le système d'exploitation est obligatoire."
-
-        regex = r"^[A-Za-z0-9.\-+ ]+$" # Accepte les lettres, tirets, points, chiffres
+        regex = r"^[A-Za-z0-9.\-+ ]+$"
         if not re.fullmatch(regex, value):
-            return False, "type poste", "Le système d'exploitation contient des caractères invalides."
-
+            return False, "système d'exploitation", "Le système d'exploitation contient des caractères invalides."
         return True, None, ""
 
     # Méthode qui renvoit exactement quel champ pose problème
