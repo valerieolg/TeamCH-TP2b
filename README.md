@@ -5,80 +5,21 @@
     <title>Parc informatique – Gestion des postes</title>
 
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        padding-left: 200px; /* espace pour le menu vertical */
-    }
-
-    /* Menu vertical fixe */
-    .sidebar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 200px;
-        height: 100%;
-        background-color: #333;
-        overflow-y: auto; /* défilement si contenu trop long */
-        padding-top: 20px;
-    }
-
-    /* Liens du menu */
-    .sidebar ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .sidebar ul li {
-        position: relative;
-    }
-
-    .sidebar ul li a {
-        display: block;
-        color: white;
-        padding: 12px 16px;
-        text-decoration: none;
-    }
-
-    .sidebar ul li a:hover {
-        background-color: #111;
-    }
-
-    /* Sous-menu (Exemples) */
-    .sidebar ul li ul {
-        display: none;
-        list-style: none;
-        padding-left: 20px;
-        background-color: #444;
-    }
-
-    .sidebar ul li:hover ul {
-        display: block; /* affiche sous-menu au hover */
-    }
-
-    .sidebar ul li ul li a {
-        padding: 10px 16px;
-        font-size: 0.9em;
-    }
-
-    /* Contenu principal */
-    .content {
-        padding: 20px;
-    }
-
-    h1, h2, h3, p, ul {
-        margin: 10px 0;
-    }
 
 </style>
 </head>
 <body>
 
-<!-- Menu vertical -->
+<h1>Parc informatique – Gestion des postes</h1>
+
+<h2 id="description">Description</h2>
+<p>
+Application Python développée en <strong>programmation orientée objet (POO)</strong>
+permettant la gestion complète d’un parc informatique à l’aide d’une interface graphique
+réalisée avec <strong>PyQt6</strong> et d’une base de données <strong>SQLite</strong>.
+</p>
 <div class="sidebar">
     <ul>
-        <li><a href="#description">Description</a></li>
         <li><a href="#architecture">Architecture</a></li>
         <li><a href="#validation">Validation</a></li>
         <li>
@@ -94,16 +35,6 @@
         </li>
     </ul>
 </div>
-
-<h1>Parc informatique – Gestion des postes</h1>
-
-<h2 id="description">Description</h2>
-<p>
-Application Python développée en <strong>programmation orientée objet (POO)</strong>
-permettant la gestion complète d’un parc informatique à l’aide d’une interface graphique
-réalisée avec <strong>PyQt6</strong> et d’une base de données <strong>SQLite</strong>.
-</p>
-
 <h3>Fonctionnalités principales</h3>
 <ul>
     <li>Ajout de postes informatiques</li>
@@ -293,12 +224,13 @@ L’enregistrement est ensuite supprimé définitivement de la base SQLite.
 
 <h3 id="rafraichir">Rafraîchir</h3>
     <p>Recharge la liste complète des postes depuis la base de données.</p>
-<hr>
+
 <h3 id="apropos">À propos</h3>
 <p>
 Le bouton "Aide et à propos de" ramène à une page HTML expliquant le fonctionnement du programme, aux remerciements et à nos contacts.<br>
 <img src="README images/15.png" alt="" width="952" height="876">
 </p>
+<hr>
 <p>
 Projet réalisé par Valérie Ouellet dans le cadre du cours
 <strong>420-2PR-BB – Programmation orientée objet</strong>,
