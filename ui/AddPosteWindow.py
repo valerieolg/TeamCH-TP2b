@@ -1,4 +1,5 @@
-from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QFormLayout, QMessageBox)
+from PyQt6.QtWidgets import (QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QFormLayout,
+                             QMessageBox, QComboBox)
 from PyQt6.QtCore import Qt
 
 from db.database import Database
@@ -42,14 +43,14 @@ class AddPosteWindow(QWidget):
         self.input_utilisateur = QLineEdit()
         self.input_type_poste = QLineEdit()
         self.input_adresse_ip = QLineEdit()
-        self.input_statut = QLineEdit()
+        self.input_statut = QComboBox()
         self.input_sys_exploitation = QLineEdit()
 
         self.input_nom_poste.setPlaceholderText("Nom du poste")
         self.input_utilisateur.setPlaceholderText("Utilisateur")
         self.input_type_poste.setPlaceholderText("Type de poste")
         self.input_adresse_ip.setPlaceholderText("Adresse IP")
-        self.input_statut.setPlaceholderText("Statut")
+        self.input_statut.addItems(["Actif", "En réparation", "Hors service"])
         self.input_sys_exploitation.setPlaceholderText("Système d'exploitation")
 
         form_layout.addRow("Nom du poste :", self.input_nom_poste)
@@ -72,7 +73,9 @@ class AddPosteWindow(QWidget):
             self.input_type_poste.setText(type_poste)
             self.input_sys_exploitation.setText(sys_exploitation)
             self.input_adresse_ip.setText(adresse_ip)
-            self.input_statut.setText(statut)
+            index = self.input_statut.findText(statut)
+            if index >= 0:
+                self.input_statut.setCurrentIndex(index)
 
         #Boutons
         button_layout = QHBoxLayout()
@@ -105,7 +108,7 @@ class AddPosteWindow(QWidget):
         utilisateur = self.input_utilisateur.text()
         type_poste = self.input_type_poste.text()
         ip = self.input_adresse_ip.text()
-        statut = self.input_statut.text()
+        statut = self.input_statut.currentText()
         systeme = self.input_sys_exploitation.text()
 
         field_map = {
