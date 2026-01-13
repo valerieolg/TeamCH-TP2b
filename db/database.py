@@ -16,13 +16,13 @@ class Database:
         cursor.execute("""
                        CREATE TABLE IF NOT EXISTS postes
                        (
-                           id_poste        INTEGER PRIMARY KEY AUTOINCREMENT, -- Clé primaire unique pour chaque poste | AUTOINCREMENT garantit un identifiant unique généré automatiquement
+                           id        INTEGER PRIMARY KEY AUTOINCREMENT, -- Clé primaire unique pour chaque poste | AUTOINCREMENT garantit un identifiant unique généré automatiquement
                            nom_poste       TEXT NOT NULL,    -- Nom du poste (obligatoire)
                            utilisateur    TEXT NOT NULL,    -- Nom de l'utilisateur (obligatoire)
                            type_poste   TEXT NOT NULL,    -- Type de poste (obligatoire)
-                           sys_exploitation     TEXT NOT NULL,     -- Système d'exploitation (obligatoire)
                            adresse_ip     TEXT NOT NULL,     -- Adresse ip (obligatoire)
-                           statut     TEXT NOT NULL     -- Statut Actif/En réparation/Hors service (obligatoire)
+                           statut     TEXT NOT NULL,     -- Statut Actif/En réparation/Hors service (obligatoire)
+                           sys_exploitation     TEXT NOT NULL     -- Système d'exploitation (obligatoire)
                        )
                        """)
 
@@ -33,19 +33,19 @@ class Database:
     STATUTS_AUTORISES = ["Actif", "En réparation", "Hors service"]
 
     def add_poste(self, poste: Poste):
-        if poste.statut not in self.STATUTS_AUTORISES:
-            raise ValueError("Statut invalide")
+ #       if poste.statut not in self.STATUTS_AUTORISES:
+ #           raise ValueError("Statut invalide")
 
         conn = self.connect()
         cursor = conn.cursor()
         cursor.execute("""
-                       INSERT INTO postes (nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut) 
+                       INSERT INTO postes (nom_poste, utilisateur, type_poste, adresse_ip, statut, sys_exploitation) 
                        -- Indique que l’on veut ajouter un nouvel enregistrement | La table ciblée est postes
                        -- Liste des colonnes dans lesquelles les données seront insérées et l’ordre est important : il doit correspondre aux valeurs fournies ensuite
                        VALUES (?, ?, ?, ?, ?, ?)
                        -- Les ? sont des paramètres SQL (placeholders) | Ils seront remplacés par des valeurs réelles au moment de l’exécution | Chaque ? correspond à une colonne listée au-dessus
                        """,
-                       (poste.nom_poste, poste.utilisateur, poste.type_poste, poste.sys_exploitation, poste.adresse_ip, poste.statut))
+                       (poste.nom_poste, poste.utilisateur, poste.type_poste, poste.adresse_ip, poste.statut, poste.sys_exploitation))
         conn.commit()
         conn.close()
 
@@ -53,7 +53,7 @@ class Database:
         conn = self.connect()
         cursor = conn.cursor()
         cursor.execute("""
-                       SELECT id, nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut
+                       SELECT nom_poste, utilisateur, type_poste, adresse_ip, statut, sys_exploitation
                        FROM postes
                        """)
         # fetchall() retourne une liste de tuples
@@ -81,7 +81,7 @@ class Database:
         cursor = conn.cursor()
         cursor.execute("""
             UPDATE postes -- Met à jour un contact existant dans la table contacts
-            SET nom_poste = ?, utilisateur = ?, type_poste = ?, sys_exploitation = ?, adresse_ip = ?, statut = ? -- Définit les nouvelles valeurs des champs du poste
+            SET nom_poste = ?, utilisateur = ?, type_poste = ?, adresse_ip = ?, statut = ?, sys_exploitation = ?-- Définit les nouvelles valeurs des champs du poste
             WHERE id = ? -- Condition obligatoire pour cibler un seul poste | L'identifiant (id) provient de la clé primaire SQLite
         """, (poste.nom_poste, poste.utilisateur, poste.type_poste, poste.sys_exploitation, poste.adresse_ip, poste.statut, poste_id))
         conn.commit()
