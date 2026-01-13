@@ -29,28 +29,28 @@ class Catch:
     @staticmethod
     def input_type_poste(value: str):
         if not value.strip(): # Vérifie d’abord si le champ est vide
-            return False, "type poste", "Le type de poste est obligatoire."
+            return False, "type de poste", "Le type de poste est obligatoire."
 
         regex = r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9 \-]+$" # Accepte les lettres, accents, espaces, tirets, apostrophes, chiffres
         if not re.fullmatch(regex, value):
-            return False, "type poste", "Le type de poste contient des caractères invalides."
+            return False, "type de poste", "Le type de poste contient des caractères invalides."
 
         return True, None, ""
 
     @staticmethod
-    def input_adresse_ip(ip):
+    def input_adresse_ip(value: str):
         try:
-            ipaddress.IPv4Address(ip)
-            return True
+            ipaddress.IPv4Address(value)
+            return True, None, ""
         except ValueError:
-            return False
+            return False, "adresse ip", "Adresse IP invalide."
 
     @staticmethod
     def input_statut(value: str):
-        STATUTS_AUTORISES = {"Actif", "Inactif", "En maintenance", "Hors service"}
+        STATUTS_AUTORISES = {"Actif", "Inactif", "En réparation", "Hors service"}
 
         if value not in STATUTS_AUTORISES:
-            return False, "statut", "Statut non valide."
+            return True, None, ""
 
     @staticmethod
     def input_sys_exploitation(value: str):

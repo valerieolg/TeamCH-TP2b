@@ -4,6 +4,7 @@ from PyQt6.QtCore import Qt
 
 from db.database import Database
 from poste import Poste
+from catch.input_errors import Catch
 
 class AddPosteWindow(QWidget):
     def __init__(self, poste_data=None, on_save_callback=None):
@@ -127,18 +128,18 @@ class AddPosteWindow(QWidget):
             for widget in widgets:
                 widget.setStyleSheet("")
 
-        # # Validation des input par catch
-        # is_valid, field, message = Catch.validate_poste(
-        #     nom, utilisateur, type, systeme, ip, statut
-        # )
-        #
-        # if not is_valid:
-        #     for widget in field_map[field]:
-        #         widget.setStyleSheet("border: 2px solid red;")
-        #         widget.setFocus()  # Place le curseur sur le champ invalide
-        #
-        #     QMessageBox.warning(self, "Erreur de validation", message)
-        #     return
+        #  Validation des input par catch
+        is_valid, field, message = Catch.validate_poste(
+             nom, utilisateur, type_poste, ip, statut, systeme
+         )
+
+        if not is_valid:
+             for widget in field_map[field]:
+                 widget.setStyleSheet("border: 2px solid red;")
+                 widget.setFocus()  # Place le curseur sur le champ invalide
+
+             QMessageBox.warning(self, "Erreur de validation", message)
+             return
 
         # Création de l'objet Poste
         poste = Poste(nom_poste=nom, utilisateur=utilisateur, type_poste=type_poste, adresse_ip=ip, statut=statut, sys_exploitation=systeme)
