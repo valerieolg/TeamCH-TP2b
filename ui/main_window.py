@@ -122,7 +122,9 @@ class MainWindow(QWidget):
             self.model.item(row, 0).text(),
             self.model.item(row, 1).text(),
             self.model.item(row, 2).text(),
-            self.model.item(row, 3).text()
+            self.model.item(row, 3).text(),
+            self.model.item(row, 4).text(),
+            self.model.item(row, 5).text()
         )
 
         # Instancie la fenêtre d'ajout/modification en mode édition
