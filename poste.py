@@ -1,5 +1,5 @@
 class Poste:
-    def __init__(self, nom_poste, utilisateur, type_poste, sys_exploitation, adresse_ip, statut):
+    def __init__(self, nom_poste, utilisateur, type_poste, adresse_ip, statut, sys_exploitation ):
         self.nom_poste = nom_poste
         self.utilisateur = utilisateur
         self.type_poste = type_poste

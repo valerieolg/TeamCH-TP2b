@@ -1,3 +1,5 @@
+import webbrowser
+
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QTableView, QMessageBox
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6.QtCore import Qt
@@ -59,6 +61,7 @@ class MainWindow(QWidget):
         btn_delete = QPushButton("Supprimer")
         btn_refresh = QPushButton("Actualiser")
         btn_quit = QPushButton("Quitter")
+        btn_aide = QPushButton("Aide et à propos de")
 
         # Lier les boutons aux méthodes appropriées
         btn_add.clicked.connect(self.open_add_window)
@@ -66,12 +69,14 @@ class MainWindow(QWidget):
         btn_delete.clicked.connect(self.delete_poste)
         btn_refresh.clicked.connect(self.load_postes_from_db)
         btn_quit.clicked.connect(self.close)
+        btn_aide.clicked.connect(self.open_website)
 
         # Ajouter les boutons au layout horizontal
         btn_layout.addWidget(btn_add)
         btn_layout.addWidget(btn_edit)
         btn_layout.addWidget(btn_delete)
         btn_layout.addWidget(btn_refresh)
+        btn_layout.addWidget(btn_aide)
         btn_layout.addStretch()
         btn_layout.addWidget(btn_quit)
 
@@ -188,5 +193,8 @@ class MainWindow(QWidget):
             row[0].setData(id, Qt.ItemDataRole.UserRole)
 
             self.model.appendRow(row)
+
+    def open_website(self):
+        webbrowser.open_new("http://localhost:63342/TeamCH-TP2b/Siteweb/index.html?_ijt=jfglnqkrgrsuvb2oicomk1gcki&_ij_reload=RELOAD_ON_SAVE")
 
 
