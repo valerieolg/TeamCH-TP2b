@@ -8,7 +8,7 @@
 <body>
 
 <h1>Parc informatique – Gestion des postes</h1>
-
+<img src="README images/5.png" alt="" width="802" height="482">
 <h2 id="description">Description</h2>
 <p>
 Application Python développée en <strong>programmation orientée objet (POO)</strong>
@@ -56,8 +56,6 @@ programmation orientée objet.
 <strong>Technologies et modules utilisés :</strong><br>
 PyQt6, SQLite, re (expressions régulières), ipaddress.
 </p>
-
-<img src="README images/5.png" alt="" width="802" height="482">
 
 <hr>
 
