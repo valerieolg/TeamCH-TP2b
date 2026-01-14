@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Parc informatique – Gestion des postes</title>
 
 <style>
 
@@ -20,7 +19,8 @@ réalisée avec <strong>PyQt6</strong> et d’une base de données <strong>SQLit
 </p>
 <div class="sidebar">
     <ul>
-        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#fonctions">Fonctionnalités principales</a></li>
+        <li><a href="#architecture">Architecture et conception</a></li>
         <li><a href="#validation">Validation</a></li>
         <li>
             <a href="#exemples">Exemples</a>
@@ -35,7 +35,7 @@ réalisée avec <strong>PyQt6</strong> et d’une base de données <strong>SQLit
         </li>
     </ul>
 </div>
-<h3>Fonctionnalités principales</h3>
+<h3 id="fonctions">Fonctionnalités principales</h3>
 <ul>
     <li>Ajout de postes informatiques</li>
     <li>Modification de postes existants</li>
